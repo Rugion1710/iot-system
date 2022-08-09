@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block prescription_active%}active{%endblock%}
+{%block content%}
+<div class="content">
+    <div id="sub-menu">
+        <a href="/pre" class="sub">Prescription</a>
+        <a href="/pre/processing" class="sub">Processing</a>
+        <a href="/pre/history" class="sub active2">View history</a>
+        
+
+    </div>
+    <div id="content-item">
+        <h1 style="margin-left: 50px; margin-top: 20px;">History of created prescription</h1>
+        <div>
+            <table id="pre_history">
+                <tr> 
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Room number</th>
+                    <th>Patient number</th>
+                    <th>Medicine</th>
+                    <th>Delivery time</th>
+                </tr>
+                {% for i in data[::-1] %}
+                <tr>
+                    <td>{{data[::-1].index(i)+1}}</td>
+                    <td>{{i.date_created}}</td>
+                    <td>{{i.doctor_name}}</td>
+                    <td>{{i.room_number}}</td>
+                    <td>{{i.patient_number}}</td>
+                    <!-- <td>{{medicine[data.index(i)]}}</td> -->
+                    <td>
+                      {%for j in range(medicine[data.index(i)]|length)%}
+                      <li>
+                        {%print("{}:{}".format(medicine[data.index(i)][j], amount[data.index(i)][j]))%}
+                      </li>
+                     
+                      {%endfor%}
+                    </td>
+                    
+                    <td>{%print(i.delivery_time)%}</td>
+                </tr>
+                {% endfor %}    
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 1000px;
+        margin-left: 50px;
+        margin-top: 20px;
+        margin-bottom: 100px;
+    }
+
+    td,
+    th {
+        border: 1px solid #999999;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+    tr:nth-child(even) {
+        background-color: #cfeaf4;
+    }
+</style>
+<script type="text/javascript" src="{{ url_for('static', filename='history.js') }}"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+
+
+</script>
+{%endblock%}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title%}Home{%endblock%}
+{%block heading%}DASHBOARD{%endblock%}
+{%block dashboard_active%}active{%endblock%}
+{%block content%}
+<div class="content">
+    <div id="sub-menu">
+        <a href="/" class="sub">CONTROL</a>
+        <a href="/robot" class="sub active2">Robot status</a>
+    </div>
+    <div id="content-item">
+        <h1 style="margin-left: 50px; margin-top: 20px;">Robot status</h1>
+        <div id="scan">
+            <button onclick="getRobots()" type="button" id="device-scanner">
+                <span id="device-scanner-text">Scan</span>
+            </button>
+        </div>
+        <div id="result-container"></div>
+    </div>
+</div>
+
+<style>
+    #scan {
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+
+    #device-scanner {
+        border: none;
+        padding: 10px;
+        background-color: rgb(227, 226, 226);
+        width: 100px;
+        font-size: 1.1em;
+        position: relative;
+    }
+
+    #device-scanner:active {
+        background-color: rgb(200, 200, 200);
+    }
+</style>
+
+<script type="text/javascript">
+var xhr = null;
+
+getXmlHttpRequestObject = function () {
+    if (!xhr) {
+        // Create a new XMLHttpRequest object 
+        xhr = new XMLHttpRequest();
+    }
+    return xhr;
+};
+
+function dataCallback() {
+    // Check response is ready or not
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log("User data received!");
+        dataDiv = document.getElementById('result-container');
+        // Set current data text
+        dataDiv.innerHTML = xhr.responseText["robot_name"];
+        console.log(xhr.responseText["robot_name"])
+    }
+}
+function getRobots() {
+    console.log("Get robot data...");
+    xhr = getXmlHttpRequestObject();
+    xhr.onreadystatechange = dataCallback;
+    // asynchronous requests
+    xhr.open("GET", "http://localhost:5000/robot_data", true);
+    // Send the request over the network
+    xhr.send(null);
+}
+
+</script>   
+
+
+{%endblock%}

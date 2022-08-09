@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block prescription_active%}active{%endblock%}
+{%block content%}
+<div class="content">
+    <div id="sub-menu">
+        <a href="/pre" class="sub">Prescription</a>
+        <a href="/pre/processing" class="sub active2">Processing</a>
+
+        <a href="/pre/history" class="sub">View history</a>
+    </div>
+    <div id="content-item">
+        <h1 style="margin-left: 50px; margin-top: 20px;">Prescription processing</h1>
+    </div>
+</div>
+
+
+
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 1000px;
+        margin-left: 50px;
+        margin-top: 20px;
+        margin-bottom: 100px;
+    }
+
+    td,
+    th {
+        border: 1px solid #999999;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+    tr:nth-child(even) {
+        background-color: #cfeaf4;
+    }
+</style>
+<script type="text/javascript" src="{{ url_for('static', filename='history.js') }}"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+
+
+</script>
+{%endblock%}

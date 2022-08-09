@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% block prescription_active%}active{%endblock%}
+{%block content%}
+<div class="content">
+    <div id="sub-menu">
+        <a href="/pre" class="sub active2">Prescription</a>
+        <a href="/pre/processing" class="sub">Processing</a>
+
+        <a href="/pre/history" class="sub">View history</a>
+    </div>
+    <div id="content-item">
+      <h1 style="margin-left: 50px;margin-top: 20px; color: #222d4f;">Creating prescription</h1>
+      <form class="create" autocomplete="off"  method="POST" style="display: flex; margin-left: 50px;">
+        <div id="firstSection">
+            <label for="name">Doctor's name:</label>
+            <input type="text" id="doctor_name" name="name" placeholder="Dr" required>
+            <label for="room">Select room number: </label>
+            <select name="room" id="room" required>
+                <option value="" disabled selected>Select room:</option>
+                <option value="1">Room number 1</option>
+                <option value="2">Room number 2</option>  
+                <option value="3">Room number 3</option>
+            </select>
+            <label for="patient">Select patient number: </label>
+            <select name="patient" id="patient" required>
+                <option value="" disabled selected>Select patient:</option>
+                <option value="1" >Patient number 1</option>
+                <option value="2">Patient number 2</option>
+                <option value="3">Patient number 3</option>
+            </select>
+       
+            <div>
+                <input type="checkbox" name="timeSet" id="timeSet" checked>
+                <label for="timeSet">Set delivery time</label>
+                
+            </div>
+            <input type="time" id="appt" name="appt"
+                    required>
+        </div>
+
+        <div id="secondSection" style="margin-bottom: 180px;">
+            <label for="medicineSearch">Select medicine:</label>
+            <br>
+            <form class="searchMedicine" method="POST">
+                <div class="autocomplete">
+                    <input id="medicine" type="text" name="medicineSearch" placeholder="Medicine name">
+                </div>
+                <button type="button" id="searchBtn">Select</button>
+            </form>
+            <h5>Medicine list:</h2> 
+            <button id="deleteAll" type="button">Delete all</button>
+            <div id="selected">
+
+            </div>
+            <button id="render" type="button">+ Render prescription</button>
+        </div>
+        
+    </form>
+    <div id="result-div" style="display: none;margin-left: 50px; margin-top: 30px; width: 100%; padding-bottom: 100px;">
+      <h2>Prescription:</h2>
+      <div style="display: flex; width: 100%; align-items: stretch; gap: 100px;">
+        <div id="result">
+        </div>
+        <div>
+          <table id="medicineTable" style="width: 500px;">
+            
+         
+
+          </table>
+        </div>
+      </div>
+      <button id="delivery" type="button">Delivery</button>
+    </div>
+    </div>
+
+ 
+
+    
+</div>
+
+
+
+
+<style>
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #999999;
+    text-align: left;
+    padding: 8px;
+  }
+  
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  
+  }
+
+  #deleteAll { 
+    background-color: #222d4f;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 8px;
+  }
+  #deleteAll:hover { 
+    background-color: #526293;
+  }
+  #secondSection {
+    position: relative;
+  }
+  #firstSection {
+    flex-direction: column;
+    gap: 10px
+    ;
+  }
+  #appt {
+    position: relative;
+  }
+    .close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+    }
+    #selected {
+      margin-top: 10px;
+      height: 170px;
+      position: absolute;
+      overflow-y: auto;
+      text-align: justify;
+      padding: 0px 10px 10px 10px;
+      background-color: #fdfbfbec;
+      border-radius: 15px;
+      border: black 1px solid;
+      list-style-type: disc;
+      width: 350px;
+      color: #222d4f;
+    }
+    #medicine {
+        width: 500px;
+        height: 20px;
+        font-size: 1rem;
+        padding:5px;
+    }
+
+    #searchBtn {
+      text-align: center;
+      border-radius: 0px;
+      border: none;
+      padding: 9px;
+      background-color: #222d4f;
+      color: white;
+      font-weight: 700;
+    }
+
+    #searchBtn:hover {
+      background-color: #526293;
+    }
+    .create {
+        gap: 50px;
+        padding: 50px;
+        margin-top: 30px;
+        background-color: #fff;
+        border-radius: 8px;
+        font-size: 1.3rem;
+        height: 300px;
+        width: auto;
+        border: black 1px solid;
+        position: relative;
+    }
+
+    #render {
+      position: absolute;
+      bottom: -210px;
+      right: 0px;
+      
+    }
+
+    #render {
+      border-radius: 20px;
+      border: none;
+      background-color: #222d4f;
+      color: white;
+      font-weight: 700;
+      padding: 20px;
+    
+
+    }
+
+    #render:active {
+      background-color: #004047;
+    }
+
+
+    .selected-item {
+        align-items:center;
+        margin-top: 10px;
+        display: flex;
+        
+        
+    }
+    .amount {
+        margin: 0 auto;
+   
+      }
+
+      .value-button {
+        display: inline-block;
+        border: 1px solid #ddd;
+        margin: 0px;
+        width: 40px;
+        height:10px;
+        text-align: center;
+        align-items: center;
+        line-height: 0.5;
+        vertical-align: middle;
+        padding: 11px 0;
+        background: #eee;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #222d4f;
+        color: white;
+        border: none;
+
+      }
+      .selected-item-name {
+        color: #222d4f;
+        width: 150px;
+      }
+
+      .value-button:hover {
+        cursor: pointer;
+        
+      }
+      
+      .amount #decrease {
+        margin-right: -4px;
+        border-radius: 8px 0 0 8px;
+        text-align: center;
+      }
+      
+      .amount #increase {
+        margin-left: -4px;
+        border-radius: 0 8px 8px 0;
+      }
+      
+      .amount #input-wrap {
+        margin: 0px;
+        padding: 0px;
+      }
+      
+      .number {
+        text-align: center;
+        border: none;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        margin: 0px;
+        width: 40px;
+        height: 30px;
+        color: #015D67;
+      }
+      
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+    
+    .autocomplete { 
+      /*the container must be positioned relative:*/
+      position: relative;
+      display: inline-block;
+    }
+ 
+
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+    .autocomplete-items div:hover {
+      /*when hovering an item:*/
+      background-color: #e9e9e9;
+    }
+    .autocomplete-active {
+      /*when navigating through the items using the arrow keys:*/
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+    }
+</style>
+<script type="text/javascript" src="{{ url_for('static', filename='pre.js') }}"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+
+    
+</script>
+{%endblock%}

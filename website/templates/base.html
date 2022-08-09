@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" />
+    <script src="https://kit.fontawesome.com/493ca20110.js" crossorigin="anonymous"></script>
+    <title>{%block title%}Prescription{%endblock%}</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://toppng.com/uploads/preview/health-plan-icon-hospital-icon-blue-11553476430fckf2owtwt.png">
+       
+</head>
+
+<body>
+    <!-- <h1 style="height: 150px;">Testing terminal:</h1> -->
+    <ul id="navbar" style="position: fixed;">
+        <li class="nav-item user">
+            <a class="nav-link" href="#">
+                <i class="fa-solid fa-user-doctor icon"></i>
+                DOCTOR
+            </a>
+        </li>
+        <li class="nav-item {% block dashboard_active%}{%endblock%}">
+            <a href="/" class="nav-link">
+                <i class="fa-solid fa-gauge icon"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-item {% block prescription_active%}{%endblock%}">
+            <a href="/pre" class="nav-link">
+                <i class="fa-solid fa-file-medical icon"></i>
+                Prescription
+            </a>
+        </li>
+        <li class="nav-item {% block patient_active%}{%endblock%}">
+            <a href="/patient" class="nav-link">
+                <i class="fa-solid fa-bed-pulse icon"></i>
+                Patient
+            </a>
+        </li>
+        <li class="nav-item {% block medicine_active%}{%endblock%}">
+            <a href="/medicine" class="nav-link">
+                <i class="fa-solid fa-pills icon"></i>
+                Medicine
+            </a>
+        </li>
+        <li class="nav-item logout">
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-right-from-bracket icon"></i>
+                Log Out
+            </a>
+        </li>
+    </ul>
+    <div class="container">
+        <div class="heading">
+            {% block heading %}
+            PRESCRIPTION
+            {%endblock%}
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+        }
+
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .vl {
+            border-left: 1px solid black;
+            height: 600px;
+            margin-left: 40px;
+            margin-top: 30px;
+            color: #222d4f;
+        }
+
+        #navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 180px;
+            height: 100vh;
+            background-color: #222d4f;
+            font-size: 1.3rem;
+            
+        }
+
+        li a {
+            display: block;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 15px;
+        }
+
+        /* color change on hover */
+      
+        .nav-item a:hover {
+            background-color: #171f37;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .active a{
+            background-color: #73a7ba;
+            color: #fff;
+           
+        }
+        .active a:hover {
+            background-color: #6b9eb0;
+            color: #fff;
+        }
+
+        /* .nav-item {
+            margin-bottom: 20px;
+        } */
+        #firstSection {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .icon {
+            margin-right: 20px;
+            width: 10px;
+            height: auto;
+        }
+
+        .user {
+            margin-bottom: 100px;
+        }
+
+        .logout {
+            margin-top: 260%;
+            width: 180px;
+        }
+    
+        .container {
+            background-color: #fff;
+            flex: 1 1 auto;
+            margin-left: 180px;
+            color: #222d4f;
+            height: 100vh;
+        }
+
+        .searchMedicine {
+            position: relative;
+        }
+
+        .searchMedicine-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .heading {
+            font-weight: 900;
+            font-size: 2.5rem;
+            padding-top: 20px;
+            padding-left: 40px;
+            color: #222d4f;
+        }
+
+        #sub-menu {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+            margin-top: 40px;
+        }
+
+        .sub {
+            text-decoration: none;
+            color: #73a7ba;
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding-left: 5px;
+        }
+
+        .active2{
+            color: black;
+            width: 100px;
+            font-weight: 700;
+            border-left: 2px black solid;
+        }
+
+        #sub-menu a:hover {
+            text-decoration: underline;
+            width: 100px;
+            font-weight: 700;
+        }
+
+        .content {
+            display: flex;
+        }
+        #content-item {
+            margin-top: 10px;
+        }
+        
+    </style>
+    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+
+
+    </script>
+</body>
+
+</html>
