@@ -162,16 +162,14 @@ class Network_operation(object):
                     ev3dev_devices_info.append(devices_dictionary[x])
             except:
                 continue
-            
+
 def scan_network():
     D = Network_operation()
     D.arp_scan()
     D.get_host_name()
     print(devices_dictionary)
     D.get_ev3dev_info()
-    return ev3dev_devices_info
-
-scan_network()
+    return devices_dictionary
 
 # get_ip_with_cidr()
 
