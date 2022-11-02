@@ -1,11 +1,8 @@
 import paho.mqtt.client as mqtt
 import json
 import pandas as pd
-import nmap
 import netifaces as ni
 import winreg as wr
-from pprint import pprint
-from getmac import get_mac_address
 from scapy.all import *
 import socket
 
@@ -109,26 +106,26 @@ class Network_operation(object):
         self.ip = ip
         print(self.ip)
 
-    def nmap_scan(self):
-        global ip_address_list
-        if len(self.ip) == 0:
-            network = '192.168.1.1/24'
-        else:
-            network = self.ip
-        print("scanning network")
-        ans, unans = arping(network, verbose=0)
-        # for s,r in ans:
-        #     mac_address_list.append(r[Ether].src)
-        #     ip_address_list.append(s[ARP].pdst)
-        #     print("{} {}".format(r[Ether].src,s[ARP].pdst))
-        # print("scanning network")
-        nm = nmap.PortScanner()
-        nm.scan(hosts=network, arguments='-sn')
-        hosts_list = [(x, nm[x]['status']['state']) for x in nm.all_hosts()]
-        for host, status in hosts_list:
-            ip_address_list.append(host)
-            print("Host\t{}".format(host))
-        print(ip_address_list)
+    # def nmap_scan(self):
+    #     global ip_address_list
+    #     if len(self.ip) == 0:
+    #         network = '192.168.1.1/24'
+    #     else:
+    #         network = self.ip
+    #     print("scanning network")
+    #     ans, unans = arping(network, verbose=0)
+    #     # for s,r in ans:
+    #     #     mac_address_list.append(r[Ether].src)
+    #     #     ip_address_list.append(s[ARP].pdst)
+    #     #     print("{} {}".format(r[Ether].src,s[ARP].pdst))
+    #     # print("scanning network")
+    #     nm = nmap.PortScanner()
+    #     nm.scan(hosts=network, arguments='-sn')
+    #     hosts_list = [(x, nm[x]['status']['state']) for x in nm.all_hosts()]
+    #     for host, status in hosts_list:
+    #         ip_address_list.append(host)
+    #         print("Host\t{}".format(host))
+    #     print(ip_address_list)
 
     def arp_scan(self):
         global devices_dictionary
@@ -170,6 +167,8 @@ def scan_network():
     print(devices_dictionary)
     D.get_ev3dev_info()
     return devices_dictionary
+
+scan_network()
 
 # get_ip_with_cidr()
 

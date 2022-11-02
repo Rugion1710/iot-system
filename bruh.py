@@ -1,7 +1,4 @@
-import keyboard
-count = 0
-while True:
-    count += 1
-    print(count)
-    if keyboard.is_pressed("u"):
-        break
+dict = {"bruh": "quan quang", "lmao": "bruh"}
+
+for i in dict:
+    print(i)
